@@ -1,0 +1,42 @@
+{
+  "entity.knife.aipi": {
+    "category": "entity",
+    "subtitle": "entity.knife.aipi.sub",
+    "sounds": [
+      {
+        "name": "hello_mod:aipi",
+        "stream": true
+      }
+    ]
+  },
+  "entity.rose_funeral.mei_gui_hua_de_zang_li": {
+    "category": "entity",
+    "subtitle": "entity.rose_funeral.mei_gui_hua_de_zang_li.sub",
+    "sounds": [
+      {
+        "name": "hello_mod:mei_gui_hua_de_zang_li",
+        "stream": true
+      }
+    ]
+  },
+  "entity.beat_it.beat_it": {
+    "category": "entity",
+    "subtitle": "entity.beat_it.beat_it.sub",
+    "sounds": [
+      {
+        "name": "hello_mod:beat_it",
+        "stream": true
+      }
+    ]
+  },
+  "entity.bow.ding": {
+    "category": "entity",
+    "subtitle": "entity.bow.ding.sub",
+    "sounds": [
+      {
+        "name": "hello_mod:ding",
+        "stream": true
+      }
+    ]
+  }
+}

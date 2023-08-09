@@ -1,0 +1,16 @@
+{
+	"item.hello_mod.moditem":"Mod Item",
+	"item.hello_mod.litao":"litao",
+	"block.hello_mod.litao2": "litao2",
+	"item.hello_mod.knife": "knife",
+	"itemGroup.interest_things": "Interest Things",
+	"effect.hello_mod.effectburn": "burning",
+	"item.minecraft.potion.effect.potionburn": "potion burn",
+	"item.minecraft.splash_potion.effect.potionburn": "splash potion burn",
+	"item.minecraft.lingering_potion.effect.potionburn": "Lingering potion burn",
+	"item.hello_mod.rose_funeral": "Music Discs",
+	"item.hello_mod.rose_funeral.desc": "Vae - 《The Funeral Of Roses》",
+	"item.hello_mod.beat_it": "Music Discs",
+	"item.hello_mod.beat_it.desc": "Michael Jackson - 《Beat it》",
+	"enchantment.hello_mod.fireproofing_shoot": "fireproofing_shoot"
+}
