@@ -2,7 +2,6 @@ package com.example.hello_mod.set;
 
 import com.example.hello_mod.Main;
 import com.example.hello_mod.enchantments.fireproofing_shoot;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
