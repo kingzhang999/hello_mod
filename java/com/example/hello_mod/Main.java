@@ -22,6 +22,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -36,6 +37,7 @@ public class Main {
     public static final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
     public static final String MOD_ID = "hello_mod";
     public static int cishu = 0;
+    public static boolean isLoose = false;
     @SubscribeEvent//标记这个方法是用来处理事件的
     public static void playerjoinworld(PlayerEvent.PlayerLoggedInEvent event){
         Player player = event.getPlayer();
@@ -107,15 +109,20 @@ public class Main {
         if (attacker != null) {
             level = attacker.getLevel();
         }
-        if (attacker != null && event.getRayTraceResult().getType() == HitResult.Type.ENTITY && !level.isClientSide() && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && attacker.getMainHandItem().getItem() == Items.BOW) {
+        if (attacker != null && event.getRayTraceResult().getType() == HitResult.Type.ENTITY && !level.isClientSide() && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && attacker.getMainHandItem().getItem() == Items.BOW && isLoose) {
             Arrow en = (Arrow) event.getProjectile();
+            isLoose = false;
             attacker.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE,20*30,1));
             if (attacker.getRandom().nextFloat() < 0.6f){
                 level.explode(en,en.getX(),en.getY(),en.getZ(),3.0f,false, Explosion.BlockInteraction.BREAK);
             }
-        }else if (attacker!=null && !level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0){
+        }else if (attacker!=null && !level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
             attacker.sendMessage(new TextComponent("You missed!!!"),Util.NIL_UUID);
         }
+    }
+    @SubscribeEvent
+    public static void loose_event(ArrowLooseEvent event){
+        isLoose = true;
     }
     public Main(){
         new Initialize();
