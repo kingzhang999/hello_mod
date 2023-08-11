@@ -113,7 +113,7 @@ public class Main {
             Arrow en = (Arrow) event.getProjectile();
             isLoose = false;
             attacker.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE,20*30,1));
-            if (attacker.getRandom().nextFloat() < 0.6f){
+            if (attacker.getRandom().nextFloat() < 0.35f){
                 level.explode(en,en.getX(),en.getY(),en.getZ(),3.0f,false, Explosion.BlockInteraction.BREAK);
             }
         }else if (attacker!=null && !level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
