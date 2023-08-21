@@ -8,7 +8,7 @@ import net.minecraft.world.level.material.MaterialColor;
 
 public class LiTao2 extends Block {
     public LiTao2(){
-        super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.METAL).strength(3.0f)
-                .requiresCorrectToolForDrops().friction(0.8f));
+        super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.METAL).strength(3.0f,9.0f)
+                .requiresCorrectToolForDrops().friction(0.8f).lightLevel((value) -> 12));
     }
 }
