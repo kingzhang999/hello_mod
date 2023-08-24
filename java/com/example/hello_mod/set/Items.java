@@ -13,7 +13,7 @@ import static com.example.hello_mod.set.Blocks.LITAO2;
 public class Items {
     public static final Item MODITEM = registerItem(new Moditem(CreativeModeTabs.INTEREST_THINGS),"moditem");
     public static final Item LITAO = registerItem(new LiTao(CreativeModeTabs.INTEREST_THINGS),"litao");
-    public static final Item LITAO2ITEM = registerItem(new BlockItem(LITAO2,new Item.Properties().tab(CreativeModeTabs.INTEREST_THINGS)),"litao2");
+    public static final Item LITAO2ITEM = registerItem(new LiTao2_item(LITAO2,new Item.Properties().tab(CreativeModeTabs.INTEREST_THINGS)),"litao2");
     public static final Item KNIFE = registerItem(new Knife(CreativeModeTabs.INTEREST_THINGS),"knife");
     public static final Item ROSE_FUNERAL = registerItem(new Rose_Funeral(CreativeModeTabs.INTEREST_THINGS),"rose_funeral");
     public static final Item BEAT_IT = registerItem(new Beat_It(CreativeModeTabs.INTEREST_THINGS),"beat_it");

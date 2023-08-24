@@ -1,6 +1,10 @@
 package com.example.hello_mod.item;
 
 import com.example.hello_mod.set.Items;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,10 +13,14 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class LiTao extends Item {
     public LiTao(CreativeModeTab tab) {
@@ -40,5 +48,11 @@ public class LiTao extends Item {
             }
         }
         return itemstack;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        components.add(Component.nullToEmpty("This is a magic LiTao.").copy().withStyle(ChatFormatting.AQUA));
+        super.appendHoverText(itemStack,level,components,tooltipFlag);
     }
 }
