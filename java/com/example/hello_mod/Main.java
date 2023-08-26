@@ -5,12 +5,15 @@ import com.example.hello_mod.set.Initialize;
 import com.example.hello_mod.set.SoundInit;
 import net.minecraft.Util;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
@@ -19,8 +22,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
@@ -30,6 +35,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.Objects;
 
 
 @Mod("hello_mod")
@@ -127,6 +134,21 @@ public class Main {
     @SubscribeEvent
     public static void loose_event(ArrowLooseEvent event){
         isLoose = true;
+    }
+    @SubscribeEvent
+    public static void level_tick(TickEvent.PlayerTickEvent event){
+        if(event.side.isServer()){
+            Player player = event.player;
+            if(event.phase == TickEvent.Phase.START && player.tickCount % 6000 == 0){
+                Level level = player.getLevel();
+                if(level.equals(Objects.requireNonNull(level.getServer()).getLevel(Level.OVERWORLD))){
+                    Zombie zombie = new Zombie(level);
+                    zombie.setItemInHand(InteractionHand.MAIN_HAND, Items.DIAMOND_AXE.getDefaultInstance());
+                    zombie.moveTo(player.getX()+player.getRandom().nextDouble(10,25),player.getY(),player.getZ()+player.getRandom().nextDouble(10,25));
+                    level.addFreshEntity(zombie);
+                }
+            }
+        }
     }
     public Main(){
         new Initialize();
