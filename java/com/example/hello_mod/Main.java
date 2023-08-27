@@ -6,11 +6,11 @@ import com.example.hello_mod.set.Initialize;
 import com.example.hello_mod.set.SoundInit;
 import net.minecraft.Util;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +23,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
@@ -113,28 +112,32 @@ public class Main {
     }//onHit end
     @SubscribeEvent
     public static void arrowHitEvent(ProjectileImpactEvent event){
-        Player attacker = (Player) event.getProjectile().getOwner();
-        Level level = null;
-        if (attacker != null) {
+        if (event.getProjectile().getOwner() instanceof Player attacker){
+            Level level;
             level = attacker.getLevel();
-        }
-        if (attacker != null && event.getRayTraceResult().getType() == HitResult.Type.ENTITY && !level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && isLoose) {
-            Arrow en = (Arrow) event.getProjectile();
-            level.playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundInit.ENTITY_BOW_DING.get(),SoundSource.VOICE,1.0f,1.0f);
-            if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0){
-                attacker.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE,20*30,1));
-                if (attacker.getRandom().nextFloat() < 0.35f){
-                    level.explode(en,en.getX(),en.getY(),en.getZ(),3.0f,false, Explosion.BlockInteraction.BREAK);
+            if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY && !level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && isLoose) {
+                Arrow en = (Arrow) event.getProjectile();
+                level.playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundInit.ENTITY_BOW_DING.get(),SoundSource.VOICE,1.0f,1.0f);
+                if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0){
+                    attacker.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE,20*30,1));
+                    if (attacker.getRandom().nextFloat() < 0.35f){
+                        level.explode(en,en.getX(),en.getY(),en.getZ(),3.0f,false, Explosion.BlockInteraction.BREAK);
+                    }
                 }
+                isLoose = false;
+            }else if (!level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
+                attacker.sendMessage(new TextComponent("You missed!!!"),Util.NIL_UUID);
             }
-            isLoose = false;
-        }else if (attacker!=null && !level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
-            attacker.sendMessage(new TextComponent("You missed!!!"),Util.NIL_UUID);
         }
     }
     @SubscribeEvent
     public static void loose_event(ArrowLooseEvent event){
-        isLoose = true;
+        if(event.getEntity() != null){
+            Entity entity = event.getEntity();
+            if(entity instanceof Player){
+                isLoose = true;
+            }
+        }
     }
     @SubscribeEvent
     public static void level_tick(TickEvent.PlayerTickEvent event){

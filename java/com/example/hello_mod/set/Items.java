@@ -2,7 +2,6 @@ package com.example.hello_mod.set;
 
 import com.example.hello_mod.Main;
 import com.example.hello_mod.item.*;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
