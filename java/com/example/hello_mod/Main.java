@@ -1,5 +1,6 @@
 package com.example.hello_mod;
 
+import com.example.hello_mod.set.DimensionInit;
 import com.example.hello_mod.set.Enchantments;
 import com.example.hello_mod.set.Initialize;
 import com.example.hello_mod.set.SoundInit;
@@ -153,6 +154,7 @@ public class Main {
     public Main(){
         new Initialize();
         SoundInit.SOUNDS.register(bus);
+        DimensionInit.register();
         //ModStructures.register(bus);ps:以后解决问题后再用
     }//Main end
 }//class end
