@@ -140,9 +140,9 @@ public class Main {
     public static void level_tick(TickEvent.PlayerTickEvent event){
         if(event.side.isServer()){
             Player player = event.player;
-            if(event.phase == TickEvent.Phase.START && player.tickCount % 6000 == 0){
+            if(event.phase == TickEvent.Phase.START && player.tickCount % 5000 == 0){
                 Level level = player.getLevel();
-                if(level.equals(Objects.requireNonNull(level.getServer()).getLevel(Level.OVERWORLD))){
+                if(level.equals(Objects.requireNonNull(level.getServer()).getLevel(DimensionInit.HELLO_KEY))){
                     Zombie zombie = new Zombie(level);
                     zombie.setItemInHand(InteractionHand.MAIN_HAND, Items.DIAMOND_AXE.getDefaultInstance());
                     zombie.moveTo(player.getX()+player.getRandom().nextDouble(10,25),player.getY(),player.getZ()+player.getRandom().nextDouble(10,25));
