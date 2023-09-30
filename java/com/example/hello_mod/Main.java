@@ -96,19 +96,37 @@ public class Main {
     public static void onHit(LivingHurtEvent event){
         Level level = event.getEntity().level;
         LivingEntity hurtone = event.getEntityLiving();
-        LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-        if (event.isCanceled() || level.isClientSide()){
-            return;
-        }//if end
-        if (attacker != null && attacker.getMainHandItem().getItem() == com.example.hello_mod.set.Items.MODITEM){
-            LightningBolt lightningbolt= EntityType.LIGHTNING_BOLT.create(hurtone.level);
-            if (lightningbolt != null) {
-                lightningbolt.setPos(hurtone.position());
-                hurtone.level.addFreshEntity(lightningbolt);/*因为Level类继承了LevelAccessor接口,LevelAccessor接口继承了
+        if(event.getSource().getEntity() instanceof Player attacker){
+            if (event.isCanceled() || level.isClientSide()) return;
+            if (attacker.getMainHandItem().getItem() == com.example.hello_mod.set.Items.MODITEM){
+                LightningBolt lightningbolt= EntityType.LIGHTNING_BOLT.create(hurtone.level);
+                if (lightningbolt != null) {
+                    lightningbolt.setPos(hurtone.position());
+                    hurtone.level.addFreshEntity(lightningbolt);/*因为Level类继承了LevelAccessor接口,LevelAccessor接口继承了
                 CommonLevelAccessor接口,CommonLevelAccessor接口继承了LevelSimulatedRW接口,LevelSimulatedRW接口继承了
                 LevelWriter接口,所以在这里才能用addFreshEntity方法*/
+                    var item =  attacker.getMainHandItem();
+                    item.hurtAndBreak(10,attacker,(things)-> {things.broadcastBreakEvent(attacker.getUsedItemHand());});
+                    attacker.getCooldowns().addCooldown(com.example.hello_mod.set.Items.MODITEM,100);
+                }//if end
             }//if end
-        }//if end
+        }else{
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            if (event.isCanceled() || level.isClientSide()){
+                return;
+            }//if end
+            if (attacker != null && attacker.getMainHandItem().getItem() == com.example.hello_mod.set.Items.MODITEM){
+                LightningBolt lightningbolt= EntityType.LIGHTNING_BOLT.create(hurtone.level);
+                if (lightningbolt != null) {
+                    lightningbolt.setPos(hurtone.position());
+                    hurtone.level.addFreshEntity(lightningbolt);/*因为Level类继承了LevelAccessor接口,LevelAccessor接口继承了
+                CommonLevelAccessor接口,CommonLevelAccessor接口继承了LevelSimulatedRW接口,LevelSimulatedRW接口继承了
+                LevelWriter接口,所以在这里才能用addFreshEntity方法*/
+                    var item = attacker.getMainHandItem();
+                    item.shrink(1);
+                }//if end
+            }//if end
+        }//else end
     }//onHit end
     @SubscribeEvent
     public static void arrowHitEvent(ProjectileImpactEvent event){
