@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //创建了一个新物品
@@ -24,6 +26,8 @@ public class Moditem extends Item {
     public static Item.Properties getProperties(CreativeModeTab tab){
         return new Item.Properties().tab(tab).durability(100);
     }
+    public static ArrayList<Item> awards = new ArrayList<>(Arrays.asList(Items.ENCHANTED_GOLDEN_APPLE,Items.GOLDEN_APPLE,
+            Items.TNT,Items.DIAMOND, com.example.hello_mod.set.Items.LITAO2ITEM, com.example.hello_mod.set.Items.MODITEM));
     @Override
     public void appendHoverText(@NotNull ItemStack itemStack, @Nullable Level level, List<Component> components, @NotNull TooltipFlag tooltipFlag) {
         components.add(Component.nullToEmpty("This is a very interesting jing lei.").copy().withStyle(ChatFormatting.GOLD));
@@ -39,7 +43,8 @@ public class Moditem extends Item {
         if(block != Blocks.LITAO2){
             Player player = useOnContext.getPlayer();
             if (player != null) {
-                player.addItem(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE,10));
+                int lucky_number = player.getRandom().nextInt(0,(awards.size() - 1));
+                player.addItem(new ItemStack(awards.get(lucky_number),10));
                 var itemstack = useOnContext.getItemInHand();
                 itemstack.shrink(1);
                 return InteractionResult.sidedSuccess(level.isClientSide());
