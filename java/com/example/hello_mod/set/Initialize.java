@@ -29,5 +29,6 @@ public class Initialize {
         Item rose_Funeral = Items.ROSE_FUNERAL;
         Item beat_It = Items.BEAT_IT;
         Enchantment fireproofing_Shoot = Enchantments.FIREPROOFING_SHOOT;
+        Item water_Bow = Items.WATER_BOW;
     }
 }

@@ -5,6 +5,7 @@ import com.example.hello_mod.item.*;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import static com.example.hello_mod.set.Blocks.LITAO2;
 
@@ -16,6 +17,7 @@ public class Items {
     public static final Item KNIFE = registerItem(new Knife(CreativeModeTabs.INTEREST_THINGS),"knife");
     public static final Item ROSE_FUNERAL = registerItem(new Rose_Funeral(CreativeModeTabs.INTEREST_THINGS),"rose_funeral");
     public static final Item BEAT_IT = registerItem(new Beat_It(CreativeModeTabs.INTEREST_THINGS),"beat_it");
+    public static final Item WATER_BOW = registerItem(new WaterBow(CreativeModeTabs.INTEREST_THINGS),"water_bow");
     public static Item registerItem(Item item,String name){
         DeferredRegister<Item> deferredRegister = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MOD_ID);
         deferredRegister.register(name,()->item);

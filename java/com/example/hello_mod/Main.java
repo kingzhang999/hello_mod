@@ -17,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -133,7 +134,7 @@ public class Main {
         if (event.getProjectile().getOwner() instanceof Player attacker){
             Level level;
             level = attacker.getLevel();
-            if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY && !level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && isLoose) {
+            if (event.getRayTraceResult().getType() == HitResult.Type.ENTITY && !level.isClientSide() && attacker.getMainHandItem().getItem() instanceof BowItem && isLoose) {
                 Arrow en = (Arrow) event.getProjectile();
                 level.playSound(null,attacker.getX(),attacker.getY(),attacker.getZ(),SoundInit.ENTITY_BOW_DING.get(),SoundSource.VOICE,1.0f,1.0f);
                 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0){
@@ -143,7 +144,7 @@ public class Main {
                     }
                 }
                 isLoose = false;
-            }else if (!level.isClientSide() && attacker.getMainHandItem().getItem() == Items.BOW && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
+            }else if (!level.isClientSide() && attacker.getMainHandItem().getItem() instanceof BowItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
                 attacker.sendMessage(new TextComponent("You missed!!!"),Util.NIL_UUID);
             }
         }
