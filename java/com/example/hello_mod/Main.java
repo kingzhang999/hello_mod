@@ -5,6 +5,7 @@ import com.example.hello_mod.set.Enchantments;
 import com.example.hello_mod.set.Initialize;
 import com.example.hello_mod.set.SoundInit;
 import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -24,6 +25,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
@@ -144,7 +147,11 @@ public class Main {
                     }
                 }
                 isLoose = false;
-            }else if (!level.isClientSide() && attacker.getMainHandItem().getItem() instanceof BowItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
+            }else if (!level.isClientSide() && attacker.getMainHandItem().getItem() == com.example.hello_mod.set.Items.WATER_BOW && isLoose && event.getRayTraceResult().getType() == HitResult.Type.BLOCK) {
+                BlockPos blockPos = event.getProjectile().getOnPos();
+                level.setBlock(blockPos, Blocks.WATER.defaultBlockState(),1);
+                event.getProjectile().remove(Entity.RemovalReason.KILLED);
+            } else if (!level.isClientSide() && attacker.getMainHandItem().getItem() instanceof BowItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.FIREPROOFING_SHOOT,attacker)>0 && isLoose){
                 attacker.sendMessage(new TextComponent("You missed!!!"),Util.NIL_UUID);
             }
         }
