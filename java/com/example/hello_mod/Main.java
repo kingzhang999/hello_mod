@@ -1,9 +1,6 @@
 package com.example.hello_mod;
 
-import com.example.hello_mod.set.DimensionInit;
-import com.example.hello_mod.set.Enchantments;
-import com.example.hello_mod.set.Initialize;
-import com.example.hello_mod.set.SoundInit;
+import com.example.hello_mod.set.*;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
@@ -26,7 +23,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
@@ -183,6 +179,7 @@ public class Main {
     public Main(){
         new Initialize();
         SoundInit.SOUNDS.register(bus);
+        Entitys.BLOCK_ENTITY_TYPE_DEFERRED_REGISTER.register(bus);
         DimensionInit.register();
         //ModStructures.register(bus);ps:以后解决问题后再用
     }//Main end
