@@ -1,6 +1,7 @@
 package com.example.hello_mod.blocks;
 
 import com.example.hello_mod.Entity.LiTao2BlockEntity;
+import com.example.hello_mod.set.Entitys;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -29,6 +30,7 @@ public class LiTao2 extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
-        return EntityBlock.super.getTicker(level, blockState, blockEntityType);
+        //return EntityBlock.super.getTicker(level, blockState, blockEntityType);
+        return Entitys.BLOCK_ENTITY_TYPE_REGISTRY_OBJECT.isPresent()? (BlockEntityTicker<T>) LiTao2BlockEntity.ticker :null;
     }
 }

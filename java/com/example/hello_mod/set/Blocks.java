@@ -5,7 +5,6 @@ import com.example.hello_mod.blocks.LiTao2;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 public class Blocks {
     public static DeferredRegister<Block> deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCKS, Main.MOD_ID);
