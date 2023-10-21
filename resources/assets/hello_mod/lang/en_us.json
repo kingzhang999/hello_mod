@@ -13,5 +13,7 @@
 	"item.hello_mod.beat_it": "Music Discs",
 	"item.hello_mod.beat_it.desc": "Michael Jackson - 《Beat it》",
 	"enchantment.hello_mod.fireproofing_shoot": "fireproofing_shoot",
-	"item.hello_mod.water_bow": "water_bow"
+	"item.hello_mod.water_bow": "water_bow",
+	"cmd.hello_mod.hello":"hello",
+	"cmd.hello_mod.passwd_wrong":"password wrong"
 }

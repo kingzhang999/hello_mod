@@ -14,7 +14,7 @@ import net.minecraftforge.common.extensions.IForgeBlockEntity;
 import java.util.List;
 
 public class LiTao2BlockEntity extends BlockEntity implements IForgeBlockEntity {
-    private static final int MAX_TIME = 5 * 20;
+    public static int MAX = 0;
     private int timer = 0;
     public static BlockEntityTicker<LiTao2BlockEntity> ticker;
     public LiTao2BlockEntity(BlockPos pos, BlockState state){
@@ -30,7 +30,7 @@ public class LiTao2BlockEntity extends BlockEntity implements IForgeBlockEntity 
         if (level == null || level.isClientSide) return;
 
         timer++;
-        if (timer >= 500) { // 1分钟 = 1200个游戏刻
+        if (timer >= 1000) { // 1分钟 = 1200个游戏刻
             timer = 0;
 
             // 获取附近的玩家
@@ -47,4 +47,5 @@ public class LiTao2BlockEntity extends BlockEntity implements IForgeBlockEntity 
             }
         }
     }
+
 }

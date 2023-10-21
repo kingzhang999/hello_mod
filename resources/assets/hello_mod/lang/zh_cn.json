@@ -13,5 +13,7 @@
 	"item.hello_mod.beat_it": "音乐唱片",
 	"item.hello_mod.beat_it.desc": "迈克尔·杰克逊 - 《Beat it》",
 	"enchantment.hello_mod.fireproofing_shoot": "防火射击",
-	"item.hello_mod.water_bow": "水弓"
+	"item.hello_mod.water_bow": "水弓",
+	"cmd.hello_mod.hello":"你好",
+	"cmd.hello_mod.passwd_wrong":"密码错误"
 }

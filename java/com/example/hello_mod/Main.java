@@ -1,7 +1,14 @@
 package com.example.hello_mod;
 
+import com.example.hello_mod.Command.TestCommand;
+import com.example.hello_mod.Entity.LiTao2BlockEntity;
 import com.example.hello_mod.set.*;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.Util;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundSource;
@@ -23,14 +30,18 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -174,6 +185,37 @@ public class Main {
                     level.addFreshEntity(zombie);
                 }
             }
+        }
+    }
+    @SubscribeEvent
+    public static void first_command(RegisterCommandsEvent event){
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        LiteralCommandNode<CommandSourceStack> cmd = dispatcher.register(
+                Commands.literal(MOD_ID).then(
+                        Commands.literal("test")
+                                .then(Commands.argument("password", StringArgumentType.string())
+                                        .requires((sourceStack)-> sourceStack.hasPermission(0))
+                                        .executes(TestCommand.instance))
+                )
+        );
+        dispatcher.register(Commands.literal("hm").redirect(cmd));//表示hm和hello_mod是等价的。
+    }
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (event.getWorld().isClientSide()) {
+            return; // 只在服务器端执行逻辑
+        }
+
+        BlockState blockState = event.getState();
+        BlockPos pos = event.getPos();
+
+        // 检查方块实体是否存在
+
+        BlockEntity tileEntity = event.getWorld().getBlockEntity(pos);//这个方法会获取曾经存在在这里的方块实体。
+        if (tileEntity instanceof LiTao2BlockEntity) {
+            LiTao2BlockEntity.MAX -= 2;
+            // 方块实体存在
+            // 在这里执行你想要的逻辑，比如发送消息提示等
         }
     }
     public Main(){

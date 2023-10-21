@@ -18,13 +18,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class LiTao2 extends Block implements EntityBlock {
+
     public LiTao2(){
         super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GREEN).sound(SoundType.METAL).strength(3.0f,9.0f)
                 .requiresCorrectToolForDrops().friction(0.8f).lightLevel((value) -> 12));
     }
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new LiTao2BlockEntity(pos, state);
+        if(LiTao2BlockEntity.MAX <= 4){
+            LiTao2BlockEntity.MAX += 1;
+            return new LiTao2BlockEntity(pos, state);
+        }else {
+            return null;
+        }
+        //return  LiTao2BlockEntity.MAX <= 5 ? new LiTao2BlockEntity(pos, state) : null;
     }
 
     @Nullable
